@@ -77,9 +77,32 @@ void PickUpYellowHub(){
 	waitUntilMotorMoveComplete(rightArm);
 	// Back up and turn
 	backward(0.8, seconds, 100);
-	Turn90Left();
+	turnLeft(330, degrees, 100);
 	// Re-align with wall
 	moveMotor(sideDrive, 2, seconds, 100);
+}
+
+void move3OrangeHubsTo2x2(){
+	// Move forward and turn to face outer wall
+	forward(5, rotations, 100);
+	// Turn and realign with wall
+	moveMotor(sideDrive, 1, seconds, 100);
+	moveMotor(sideDrive, -0.2, rotations, 100);
+	turnRight(155, degrees, 100);
+	// Move sideways to center self with the 3 hubs
+	forward(1.8, rotations, 100);
+	turnRight(155, degrees, 100);
+	// Move forward to push
+	forward(3, rotations, 100);
+	// Turn left 45 degrees to prepare to push the orange hubs into the scoring zone
+	moveMotor(rightDrive, 310, degrees, 100);
+	// Push Hubs into the 2x2 scoring
+	forward(1, seconds, 20);
+	// Put arm down
+	moveMotorTarget(leftArm, -800, 100);
+	moveMotorTarget(leftArm, -800, 100);
+	// Open claw
+	moveMotor(clawMotor, 0.5, seconds, -100);
 }
 
 //* Main Task *//
@@ -89,5 +112,5 @@ task main()
 	waitUntil(getTouchLEDValue(touchLED) == true);
 	//lowerArmUntilBumperPressed();
 	PickUpYellowHub();
-	wait(1, seconds);
+	move3OrangeHubsTo2x2();
 }
