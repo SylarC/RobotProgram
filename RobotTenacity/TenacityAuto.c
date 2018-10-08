@@ -28,6 +28,10 @@ void Turn180(){
 	turnRight(620, degrees, 100);
 }
 
+void WaitLED(){
+	waitUntil(getTouchLEDValue(touchLED) == true);
+}
+
 void MoveArm(int EncoderDistance){
 	resetMotorEncoder(leftArm);
 	resetMotorEncoder(rightArm);
@@ -51,35 +55,6 @@ void lowerArmUntilBumperPressed(){
 /** Function Library **/
 /**********************/
 
-void init(){
-	waitUntil(getTouchLEDValue(touchLED) == true);
-}
-
-void PickUpRightYellowHub(){
-	// Re-align with the wall and barrier
-	moveMotor(sideDrive, 0.5, seconds, 100);
-	backward(1, seconds, 100);
-	// Lift arm to prepare to pick yellow hub
-	moveMotorTarget(leftArm, 980, 100);
-	moveMotorTarget(rightArm, 980, 100);
-	wait(1, seconds);
-	// Move sideways to align with the yellow hub
-	forward(0.1, rotations, 100);
-	moveMotor(sideDrive, -1.9, rotations, 100);
-	// Move forward and pick up yellow hub
-	waitUntilMotorMoveComplete(leftArm);
-	forward(0.8, rotations, 100);
-	moveMotor(clawMotor, 0.5, seconds, -100);
-	moveMotorTarget(leftArm, 175, 100);
-	moveMotorTarget(rightArm, 175, 100);
-	waitUntilMotorMoveComplete(rightArm);
-	// Back up and turn
-	backward(0.8, seconds, 100);
-	turnLeft(330, degrees, 100);
-	// Re-align with wall
-	moveMotor(sideDrive, 2, seconds, 100);
-}
-
 void PickUpLeftYellowHub(){
 	// Re-align with the wall and barrier
 	moveMotor(sideDrive, 0.5, seconds, -100);
@@ -92,7 +67,7 @@ void PickUpLeftYellowHub(){
 	forward(0.1, rotations, 100);
 	moveMotor(sideDrive, 2, rotations, 100);
 	// Move forward and pick up yellow hub
-	backward(1, seconds, )
+	backward(1, seconds, 100);
 	waitUntilMotorMoveComplete(leftArm);
 	forward(0.8, rotations, 100);
 	moveMotor(clawMotor, 0.5, seconds, -100);
@@ -135,33 +110,38 @@ void move3OrangeHubsTo2x2(){
 		waitUntil(getGyroDegrees(gyroSensor) == 90);
 		stopMultipleMotors(leftDrive, rightDrive);
 	}
-	backward(1.5, rotations, 100);
+	backward(2, rotations, 100);
 	// Move sideways and align to the wall
 	moveMotor(sideDrive, 2, seconds, -100);
 	// Push hubs into sccoring zone
-	forward(1.5, rotations, 100);
+	forward(2, rotations, 100);
 	moveMotorTarget(leftArm, -825, 100);
 	moveMotorTarget(rightArm, -825, 100);
 	waitUntilMotorMoveComplete(leftArm);
 	moveMotor(clawMotor, 1, seconds, 100);
-	backward(2, rotations, 100);
-	/**
-	// Move sideways and push hubs into scoring zone
 	backward(1, rotations, 100);
-	setMotor(rightDrive, 100);
-	setMotor(leftDrive, -100);
-	waitUntil(getGyroDegrees(gyroSensor) == 90);
-	stopMultipleMotors(leftDrive, rightDrive);
-	backward(1, rotations, 100);
-	// Move sideways and align to with the wall
-	moveMotor(sideDrive, 3, seconds, -100);
-	forward(2, rotations, 100);
-	**/
+}
+
+void KnockOffRightHub(){
+	// Re-align with the wall and barrier
+	moveMotor(sideDrive, 0.5, seconds, 100);
+	backward(1, seconds, 100);
+	moveMotor(clawMotor, 0.5, seconds, -100);
+	// Lift arm to prepare to pick yellow hub
+	moveMotorTarget(leftArm, 800, 100);
+	moveMotorTarget(rightArm, 800, 100);
+	wait(1, seconds);
+	// Move sideways to align with the yellow hub
+	forward(0.1, rotations, 100);
+	moveMotor(sideDrive, -2, rotations, 100);
+	// Move forward and knock off yellow hub
+	backward(1, seconds, 100);
+	waitUntilMotorMoveComplete(leftArm);
+	forward(1, seconds, 100);
 }
 
 void MoveScoringZone(){
-	waitUntil(getTouchLEDValue(touchLED) == true);
-	moveMotor(sideDrive, 1, rotations, 100);
+	moveMotor(sideDrive, -1, rotations, 100);
 	forward(2, rotations, 100);
 }
 
@@ -182,7 +162,22 @@ task main()
 	//lowerArmUntilBumperPressed();
 	PickUpLeftYellowHub();
 	move3OrangeHubsTo2x2();
+	moveMotor(sideDrive, 2, seconds, 100);
+	waitUntil(getTouchLEDValue(touchLED) == true);
+	KnockOffRightHub();
+	// Move arm down
+	moveMotorTarget(leftArm, -800, 100);
+	moveMotorTarget(rightArm, -800, 100);
+	// Back up and go to starting zone
+	backward(1, seconds, 100);
+	forward(0.2, rotations);
+	moveMotor(sideDrive, 2, seconds, 100);
+	backward(0.5, seconds, 100);
+	// Go to scoring zone
+	MoveScoringZone();
+	//
 	while(true){
+		waitUntil(getTouchLEDValue(touchLED) == true);
 		MoveScoringZone();
 	}
 }
