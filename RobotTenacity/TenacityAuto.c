@@ -92,6 +92,7 @@ void PickUpLeftYellowHub(){
 	forward(0.1, rotations, 100);
 	moveMotor(sideDrive, 2, rotations, 100);
 	// Move forward and pick up yellow hub
+	backward(1, seconds, )
 	waitUntilMotorMoveComplete(leftArm);
 	forward(0.8, rotations, 100);
 	moveMotor(clawMotor, 0.5, seconds, -100);
@@ -171,6 +172,13 @@ task main()
 	setTouchLEDColor(touchLED, colorViolet);
 	waitUntil(getTouchLEDValue(touchLED) == true);
 	wait(1, seconds);
+	// Open Claw
+	moveMotor(clawMotor, 1, seconds, 100);
+	// Lower the arm
+	setMotor(leftArm, -10);
+	setMotor(rightArm, -10);
+	wait(1, seconds);
+	stopMultipleMotors(leftArm, rightArm);
 	//lowerArmUntilBumperPressed();
 	PickUpLeftYellowHub();
 	move3OrangeHubsTo2x2();
