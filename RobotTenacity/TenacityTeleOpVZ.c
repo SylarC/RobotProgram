@@ -167,7 +167,7 @@ task main(){
 	startTask(ArmMovement);
 	}
 	*/
-	else if(vexRT[BtnEUp] == true){
+	if(vexRT[BtnEUp] == true){
 		wait(0.2, seconds);
 		stopTask(BaseControl);
 		stopLimbTasks();
@@ -186,5 +186,4 @@ task main(){
 		startLimbTasks();
 		startTask(BaseControl);
 	}
-}
 }
