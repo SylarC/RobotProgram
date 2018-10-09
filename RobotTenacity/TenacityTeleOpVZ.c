@@ -1,5 +1,4 @@
 #pragma config(Sensor, port2,  gyroSensor,     sensorVexIQ_Gyro)
-#pragma config(Sensor, port3,  ArmBumper,      sensorVexIQ_Touch)
 #pragma config(Sensor, port7,  touchLED,       sensorVexIQ_LED)
 #pragma config(Motor,  motor1,          leftDrive,     tmotorVexIQ, PIDControl, driveLeft, encoder)
 #pragma config(Motor,  motor4,          leftArm,       tmotorVexIQ, PIDControl, reversed, encoder)
@@ -45,13 +44,13 @@ task ArmMovement(){
 }
 
 // Function to lower arm until bumper is pressed
-void lowerArmUntilBumperPressed(){
+/*void lowerArmUntilBumperPressed(){
 	// Set Motors to run until bumper pressed
 	setMotor(leftArm, -100);
 	setMotor(rightArm, -100);
 	waitUntil(getBumperValue(ArmBumper) == true);
 	stopMultipleMotors(leftArm, rightArm);
-}
+}*/
 
 
 int ClawStatus = 0;
