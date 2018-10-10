@@ -175,7 +175,7 @@ void ScoreYellowHub(){
 	// Move sideways
 	moveMotor(sideDrive, -1, rotations, 100);
 	// Move forward
-	forward(0.5, rotations, 100);
+	forward(1, rotations, 100);
 	moveMotor(sideDrive, 0.5, rotations, 100);
 }
 
