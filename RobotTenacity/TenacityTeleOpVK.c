@@ -47,7 +47,7 @@ task ArmMovement(){
 // Function to lower arm until bumper is pressed
 void lowerArmUntilBumperPressed(){
 	// Set Motors to run until bumper pressed
-	setMotor(leftArm, -100);
+	setMotor(leftArm, -100);e
 	setMotor(rightArm, -100);
 	waitUntil(getBumperValue(ArmBumper) == true);
 	stopMultipleMotors(leftArm, rightArm);
