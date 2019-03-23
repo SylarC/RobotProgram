@@ -57,7 +57,7 @@ task main(){
 	// Start tasks
 	startLimbTasks();
 	startTask(BaseControl);
-	startTask(ExtraFunctions);
+	// startTask(ExtraFunctions);
 	while(true){
 		// Display program and run Claw Control
 		displayTextLine(line1, "Mushu TeleOp");
