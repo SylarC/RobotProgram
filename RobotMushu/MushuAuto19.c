@@ -85,7 +85,7 @@ void PickUpLeftYellowHub(){
 	moveMotorTarget(rightArm, 1000, 100);
 	// Move sideways to align with the yellow hub
 	forward(0.1, rotations, 100);
-	moveMotor(sideDrive, 1.7, rotations, 100);
+	moveMotor(sideDrive, 1.6, rotations, 100);
 	// Move forward and pick up yellow hub
 	backward(0.5, seconds, 100);
 	waitUntilMotorMoveComplete(leftArm);
@@ -108,7 +108,7 @@ void PickUpRightYellowHub(){
 	moveMotorTarget(rightArm, 670, 100);
 	// Move sideways to align with the yellow hub
 	forward(0.1, rotations, 100);
-	moveMotor(sideDrive, -1.7, rotations, -100);
+	moveMotor(sideDrive, -1.6, rotations, -100);
 	// Move forward and pick up yellow hub
 	backward(0.5, seconds, 100);
 	waitUntilMotorMoveComplete(leftArm);
@@ -183,7 +183,7 @@ void moveThroughU(){
 	stopMotor(rightDrive);
 	}*/
 	forward(2.7, seconds, 100);
-	moveMotor(hookMotor, -0.5, seconds);
+	moveMotor(hookMotor, 0.5, seconds, -100);
 	// Move orange hubs to scoring zone
 	backward(0.1, rotations, 100);
 	turnRight(0.85, rotations, 100);
@@ -239,7 +239,7 @@ void move3OrangeHubsTo2x2(){
 	// Move sideways and align to the wall
 	moveMotor(sideDrive, 1.3, seconds, -100);
 	// Push hubs into sccoring zone
-	forward(1.4, seconds, 100);
+	forward(1.35, seconds, 100);
 	backward(0.2, rotations, 100);
 	moveMotorTarget(leftArm, -855, 100);
 	moveMotorTarget(rightArm, -855, 100);
@@ -285,13 +285,12 @@ moveMotor(sideDrive, 0.8, rotations, 100);
 }*/
 
 void MoveScoringZone(){
-	moveMotor(sideDrive, 0.6, rotations, 100);
 	moveMotorTarget(leftArm, 925, 100);
 	moveMotorTarget(rightArm, 925, 100);
 	waitUntilMotorMoveComplete(rightArm);
 	forward(2.3, rotations, 100);
-	moveMotorTarget(leftArm, -1215, 100);
-	moveMotorTarget(rightArm, -1215, 100);
+	moveMotorTarget(leftArm, -815, 100);
+	moveMotorTarget(rightArm, -815, 100);
 }
 
 //* Main Task *//
