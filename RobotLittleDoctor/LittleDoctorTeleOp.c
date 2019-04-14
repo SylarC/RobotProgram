@@ -46,26 +46,23 @@ task BaseControl(){
 task SideFunctions(){
 	while(true){
 		if(vexRT[BtnFUp] == true && vexRT[BtnEUp] == true){
+		// Go under Bar
 			stopTask(ArmMovement);
-			setMotorTarget(leftArm, -1200, 100);
-			setMotorTarget(rightArm, -1200, 100);
-			waitUntilMotorMoveComplete(leftArm);
-			startTask(ArmMovement);
-			waitUntil(vexRT[BtnFUp] == true && vexRT[BtnEUp] == true);
-			stopTask(ArmMovement);
-			setMotorTarget(leftArm, -65, 100);
-			setMotorTarget(rightArm, -65, 100);
+			setMotorTarget(leftArm, 500, 100);
+			setMotorTarget(rightArm, 500, 100);
 			waitUntilMotorMoveComplete(leftArm);
 			startTask(ArmMovement);
 		}
 
 		else if(vexRT[BtnEDown] == true){
+			// Pick Yellow Hub
 			stopTask(ArmMovement);
-			setMotorTarget(leftArm, -800, 100);
-			setMotorTarget(rightArm, -800, 100);
+			setMotorTarget(leftArm, 1025, 100);
+			setMotorTarget(rightArm, 1025, 100);
 			waitUntilMotorMoveComplete(leftArm);
 			startTask(ArmMovement);
 		}
+
 	}
 }
 
@@ -78,10 +75,11 @@ void startLimbTasks(){
 
 
 // Task for special commands
-
 task main(){
+	resetMotorEncoder(rightArm);
+	resetMotorEncoder(leftArm);
 	startTask(BaseControl);
-	// startTask(SideFunctions);
+	startTask(SideFunctions);
 	startLimbTasks();
 	setTouchLEDColor(touchLED, colorRed);
 	while(true){
