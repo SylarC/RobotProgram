@@ -1,8 +1,7 @@
 #pragma config(Sensor, port2,  touchLED,       sensorVexIQ_LED)
-#pragma config(Sensor, port3,  gyroSensor,     sensorVexIQ_Gyro)
-#pragma config(Motor,  motor1,          leftDrive,     tmotorVexIQ, PIDControl, driveLeft, encoder)
+#pragma config(Motor,  motor1,          leftDrive,     tmotorVexIQ, PIDControl, reversed, driveLeft, encoder)
 #pragma config(Motor,  motor4,          sideDrive,     tmotorVexIQ, PIDControl, encoder)
-#pragma config(Motor,  motor6,          rightDrive,    tmotorVexIQ, PIDControl, reversed, driveRight, encoder)
+#pragma config(Motor,  motor6,          rightDrive,    tmotorVexIQ, PIDControl, driveRight, encoder)
 #pragma config(Motor,  motor9,          hookMotor,     tmotorVexIQ, PIDControl, encoder)
 #pragma config(Motor,  motor10,         rightArm,      tmotorVexIQ, PIDControl, encoder)
 #pragma config(Motor,  motor12,         leftArm,       tmotorVexIQ, PIDControl, reversed, encoder)
@@ -83,7 +82,7 @@ task main(){
 	setTouchLEDColor(touchLED, colorRed);
 	while(true){
 		// Display program and run Claw Control
-		displayTextLine(line1, "Avalon TeleOp");
+		displayTextLine(line1, "Emu TeleOp");
 		if(vexRT[BtnFDown] == true && DriveBaseSpeedMode == 1){
 			DriveBaseSpeedMode = 0;
 			setTouchLEDColor(touchLED, colorRed);

@@ -52,7 +52,7 @@ void reOrient(float degrees, int sleepMSec){
 		displayTextLine(3, "Gyro degree is: %d", currentDegree);
 		displayTextLine(4, "Reverse flag: %d", reverseTurnFlag);
 		//Set the motors to turn to the left at 25% speed.
-		int degreeToTurn = 25 * reverseTurnFlag;
+		int degreeToTurn = 10 * reverseTurnFlag;
 		setMotorSpeed(leftDrive, degreeToTurn);
 		setMotorSpeed(rightDrive, degreeToTurn * -1);
 		sleep(200);  //wait 1 second for the robot to come to a complete stop.
