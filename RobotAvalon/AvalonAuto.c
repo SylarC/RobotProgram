@@ -108,16 +108,16 @@ void pickUpRightYellowHub(){
 	// Lift arm to prepare to pick yellow hub
 	moveArm(1025, 'n');
 	// Move forward to not scrape wall
-	moveRobot('f', 0.25, 100);
+	moveRobot('f', 0.75, 100);
 	// Move sideways to align with yellow hub
-	moveSideDrive('r', 1);
+	moveMotor(sideDrive, 1.65, rotations, -100);
 	// Back up and re-align with wall
 	backward(0.7, seconds, 100);
 	// Move forward to yellow hub
 	moveRobot('f', 1.5, 100);
 	// Wait until arm raised so we don't knock off yellow hub
 	waitUntilMotorMoveComplete(leftArm);
-	moveArm(1380, 'y');
+	moveArm(1370, 'y');
 	// Back up to re-align with wall
 	backward(1, seconds, 50);
 }
@@ -125,11 +125,11 @@ void pickUpRightYellowHub(){
 void pickUpTwoFromTheEightHubs(){
 	// Start from end of pickUpRightYellowHub
 	// Move forward to allow space to turn
-	forward(0.1, rotations, 100);
+	forward(0.1, rotations, 50);
 	// Lower arm to prevent tipping
 	moveArm(630, 'n');
 	// Move sideways back to starting area
-	moveSideDrive('l', 0.5);
+	moveMotor(sideDrive, 0.5, rotations, 100);
 	// Turn 90 degrees to the right
 	turnRobotTo(-90, 100);
 	// Go forward and align the hubs against the wall
@@ -146,14 +146,16 @@ void score1HubFromRowof3(){
 	moveMotor(sideDrive, 1, seconds, -100);
 	// Move away from wall to allow turn
 	moveMotor(sideDrive, 0.7, rotations, 100);
-	// Turn 45 degrees towards drivers
-	turnRobotTo(225, 100);
+	// Turn 45 degrees away from drivers
+	turnRobotTo(45, 100);
 	// Back up to push 1 hub form row of 3 into 2x2 scoring zone
-	backward(2.05, seconds, 100);
+	forward(2.05, seconds, 100);
+	// Back up
+	moveRobot('b', 1.5, 100);
+	// Move sideways to allow turning
+	moveMotor(sideDrive, -0.5, rotations, 100);
 	// Turn to face driver
 	turnRobotTo(180, 100);
-	// Push the hub in again
-	backward(0.07, seconds, 100);
 }
 
 void score2OrangeHubsAndYellowHub(){
@@ -162,6 +164,8 @@ void score2OrangeHubsAndYellowHub(){
 	forward(2, seconds, 100);
 	// Release the hooks
 	moveMotor(hookMotor, 0.6, rotations, 100);
+	// Back up before dropping
+	backward(0.2, rotations, 50);
 	// Lower the arm
 	moveArm(130, 'y');
 	// Back Up
@@ -176,9 +180,9 @@ void pickUpLeftYellowHub(){
 	// Lift arm to prepare to pick yellow hub
 	moveArm(1025, 'n');
 	// Move forward to not scrape wall
-	moveRobot('f', 0.25, 100);
+	moveRobot('f', 0.75, 100);
 	// Move sideways to align with yellow hub
-	moveSideDrive('l', 1);
+	moveMotor(sideDrive, 1.65, rotations, 100);
 	// Back up to re-align with wall
 	backward(0.5, seconds, 100);
 	// Wait until arm raised so we don't knock off yellow hub
@@ -186,9 +190,11 @@ void pickUpLeftYellowHub(){
 	// Move forward to yellow hub
 	moveRobot('f', 1.5, 100);
 	// Lift hub off pedestal
-	moveArm(1380, 'y');
+	moveArm(1370, 'y');
 	// Back up away from structure
-	moveRobot('b', 0.5, 50);
+	backward(1, seconds, 100);
+	// Move forward to allow turning
+	forward(0.1, rotations, 50);
 	// Turn 90 degrees, facing 1x4 scoring zone
 	turnRobotTo(90, 100);
 	// Re-align with wall
@@ -198,40 +204,55 @@ void pickUpLeftYellowHub(){
 void move2OrangeHubsTo2x2(){
 	// Start from end of pickUpLeftYellowHub
 	// Lower Arm
-	moveArm(125, 'n');
+	moveArm(630, 'n');
 	// Move away from wall
-	moveSideDrive(0.5, 'r');
-	// Move forward past the sign
-	moveRobot('f', 0.5, 100);
-	// Move away from 1x4 scoring zone
-	moveSideDrive(0.5, 'r');
-	// Turn to face row of hubs
+	moveMotor(sideDrive, -0.2, rotations, 100);
+	// Turn
+	turnRobotTo(60, 100);
+	// Move forward to align with row of hubs
+	forward(1.3, rotations, 100);
+	// Turn to face hubs
 	turnRobotTo(0, 100);
 	// Move forward to group hubs
-	moveRobot('f', 2, 100);
+	forward(4, seconds, 50);
 	// Lower hooks
 	moveMotor(hookMotor, -0.6, rotations, 100);
+	// Re-align with wall
+	moveMotor(sideDrive, 1, seconds, -100);
 	// Back up to avoid scraping on wall
-	moveRobot('b', 0.25, 100);
+	moveRobot('b', 0.5, 100);
 	// Turn to face scoring zone
 	turnRobotTo(90, 100);
 	// Re-align with the wall
 	moveMotor(sideDrive, 1, seconds, -100);
 	// Move forward to score
 	forward(1, seconds, 100);
+	// Re-re-align with wall
+	moveMotor(sideDrive, 1, seconds, -100);
+}
+
+void scoreLeftYellowHub(){
+	// Start from end of move2OrangeHubsTo2x2
+	// Back up before dropping
+	backward(0.2, rotations, 50);
+	// Release the hooks
+	moveMotor(hookMotor, 0.6, rotations, 100);
+	// Lower the arm
+	moveArm(130, 'y');
+	// Back Up
+	backward(0.7, rotations, 20);
 }
 
 // PART 3 //
 
 void MoveScoringZone(){
 	// Start from left position
-	moveMotorTarget(leftArm, 1025, 100);
-	moveMotorTarget(rightArm, 1025, 100);
-	waitUntilMotorMoveComplete(rightArm);
+	// Lift Arm
+	moveArm(1370, 'y');
+	// Move forward
 	forward(1.15, rotations, 100);
-	moveMotorTarget(leftArm, -1115, 100);
-	moveMotorTarget(rightArm, -1115, 100);
-	forward(0.1, rotations, 100);
+	// Lower arm
+	moveArm(300, 'y');
 }
 
 //* Main Task *//
@@ -255,6 +276,7 @@ task main()
 	waitUntil(getTouchLEDValue(touchLED) == true);
 	pickUpLeftYellowHub();
 	move2OrangeHubsTo2x2();
+	scoreLeftYellowHub();
 
 	// Loop "Hang on Bar" (Part 3) Function (Start Left)
 	while(true){
