@@ -131,9 +131,18 @@ void pickUpTwoFromTheEightHubs(){
 	// Move sideways back to starting area
 	moveMotor(sideDrive, 0.5, rotations, 100);
 	// Turn 90 degrees to the right
+	turnRight(147, degrees, 100);
 	turnRobotTo(-90, 100);
 	// Go forward and align the hubs against the wall
 	forward(2.2, seconds, 50);
+	// Realign
+	moveMotor(sideDrive, 1, seconds, -100);
+	// Back Up
+	backward(0.5, rotations, 100);
+	// Realign with wall
+	moveMotor(sideDrive, 1, seconds, -100);
+	// Forward again
+	forward(1, seconds, 100);
 	// Hook the hubs
 	moveMotor(hookMotor, 0.8, seconds, -100);
 	// Back up to 1 tile right of the 1x4 scoring zone
@@ -147,6 +156,7 @@ void score1HubFromRowof3(){
 	// Move away from wall to allow turn
 	moveMotor(sideDrive, 0.7, rotations, 100);
 	// Turn 45 degrees away from drivers
+	turnLeft(147, degrees, 100);
 	turnRobotTo(45, 100);
 	// Back up to push 1 hub form row of 3 into 2x2 scoring zone
 	forward(2.05, seconds, 100);
@@ -155,6 +165,7 @@ void score1HubFromRowof3(){
 	// Move sideways to allow turning
 	moveMotor(sideDrive, -0.5, rotations, 100);
 	// Turn to face driver
+	turnLeft(220, degrees, 100);
 	turnRobotTo(180, 100);
 }
 
@@ -194,8 +205,9 @@ void pickUpLeftYellowHub(){
 	// Back up away from structure
 	backward(1, seconds, 100);
 	// Move forward to allow turning
-	forward(0.1, rotations, 50);
+	forward(0.2, rotations, 50);
 	// Turn 90 degrees, facing 1x4 scoring zone
+	turnLeft(147, degrees, 100);
 	turnRobotTo(90, 100);
 	// Re-align with wall
 	moveMotor(sideDrive, 0.5, rotations, 100);
@@ -206,37 +218,38 @@ void move2OrangeHubsTo2x2(){
 	// Lower Arm
 	moveArm(630, 'n');
 	// Move away from wall
-	moveMotor(sideDrive, -0.2, rotations, 100);
+	moveMotor(sideDrive, -0.3, rotations, 100);
 	// Turn
-	turnRobotTo(60, 100);
+	turnRobotTo(55, 100);
+	// Move sideways away from structure
+	moveMotor(sideDrive, 0.2, rotations, 100);
 	// Move forward to align with row of hubs
-	forward(1.3, rotations, 100);
+	forward(1.85, rotations, 100);
 	// Turn to face hubs
 	turnRobotTo(0, 100);
 	// Move forward to group hubs
 	forward(4, seconds, 50);
 	// Lower hooks
-	moveMotor(hookMotor, -0.6, rotations, 100);
+	moveMotor(hookMotor, 1, seconds, -50);
 	// Re-align with wall
 	moveMotor(sideDrive, 1, seconds, -100);
 	// Back up to avoid scraping on wall
 	moveRobot('b', 0.5, 100);
 	// Turn to face scoring zone
+	turnLeft(147, degrees, 100);
 	turnRobotTo(90, 100);
 	// Re-align with the wall
 	moveMotor(sideDrive, 1, seconds, -100);
+		// Release the hooks
+	moveMotor(hookMotor, 2, seconds, 100);
 	// Move forward to score
-	forward(1, seconds, 100);
+	forward(2, seconds, 50);
 	// Re-re-align with wall
 	moveMotor(sideDrive, 1, seconds, -100);
 }
 
 void scoreLeftYellowHub(){
 	// Start from end of move2OrangeHubsTo2x2
-	// Back up before dropping
-	backward(0.2, rotations, 50);
-	// Release the hooks
-	moveMotor(hookMotor, 0.6, rotations, 100);
 	// Lower the arm
 	moveArm(130, 'y');
 	// Back Up
@@ -252,7 +265,7 @@ void MoveScoringZone(){
 	// Move forward
 	forward(1.15, rotations, 100);
 	// Lower arm
-	moveArm(300, 'y');
+	moveArm(200, 'y');
 }
 
 //* Main Task *//
@@ -267,6 +280,7 @@ task main()
 
 	// Wait to run 1st part of program (Start Right)
 	waitUntil(getTouchLEDValue(touchLED) == true);
+	resetGyro(gyroSensor);
 	pickUpRightYellowHub();
 	pickUpTwoFromTheEightHubs();
 	score1HubFromRowof3();
