@@ -53,7 +53,7 @@ void turnRobotDegrees(int deg, int power, int direction){
 
 // Robot limb functions
 void claw(string action){
-	float amountToMoveInRotations = 0.67;
+	float amountToMoveInRotations = 0.7;
 	if(action == "open"){
 		moveMotor(clawMotor, amountToMoveInRotations, rotations, 100);
 	}
@@ -66,7 +66,7 @@ void moveArmInRotations(int distance, int power){
 	moveMotor(armMotor, distance, rotations, -power);
 }
 
-// Movement functions
+// Scoring functions
 void scoreGreenCubesInFrontOfLowPlatforms(int side){
 	setTouchLEDColor(touchLED, colorRed);
 	moveRobotMM(40, 25);
@@ -98,22 +98,24 @@ void scoreGreenCubesInFrontOfLowPlatforms(int side){
 void scoreMiddleGreenCubeOnHighPlatform(int side){
 	setTouchLEDColor(touchLED, colorRed);
 	// Move forward away from wall
-	moveRobotTiles(0.25, 50);
+	moveRobotMM(40, 25);
 	// Turn 45 degrees right
-	turnRobotDegrees(45, 100, right * side);
+	turnRobotDegrees(60, 100, right * side);
 	// Move forward to cube
-	moveRobotTiles(1, 100);
+	moveRobotMM(400, 100);
+	turnRobotDegrees(15, 100, left * side);
+	moveRobotMM(300, 20);
 	// Pick up cubes
 	claw(close);
 	// Move forward to align with high platform
-	moveRobotTiles(1, 100);
 	moveArmInRotations(2, 100);
 	// Turn to face high platform
 	turnRobotDegrees(135, 100, right * side);
 	// Move to high platform
-	moveRobotTiles(0.5, 100);
+	moveRobotMM(270, 50);
 	// Open claw
-	claw(close);
+	claw(open);
+	moveRobotMM(-100, 100);
 }
 
 // Sensor Functions
@@ -128,12 +130,16 @@ task main()
 	displayTextLine(line2, "Made by Ky");
 	displayTextLine(line3, "Hehe Shoob!");
 	waitForLED();
+	setMotor(armMotor, 100);
+	waitUntil(getBumperValue(armBump) == true);
+	setMotor(armMotor, 0);
+	// Begin functions
 	scoreGreenCubesInFrontOfLowPlatforms(left);
 	setTouchLEDColor(touchLED, colorGreen);
 	waitForLED();
 	scoreGreenCubesInFrontOfLowPlatforms(right);
 	setTouchLEDColor(touchLED, colorGreen);
 	waitForLED();
-	scoreMiddleGreenCubeOnHighPlatform(left);
+	scoreMiddleGreenCubeOnHighPlatform(right);
 	setTouchLEDColor(touchLED, colorGreen);
 }
